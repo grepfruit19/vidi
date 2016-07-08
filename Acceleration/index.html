@@ -90,7 +90,7 @@ function dragable (clickEl,dragEl) {
       return false;
     }
 
-    var frame = function(x,y,xvel,yvel) {
+    var frame = function() {
       x = x + xvel;
       y = y + yvel;
       t.style.top = x + 'px';
@@ -105,11 +105,11 @@ function dragable (clickEl,dragEl) {
         document.body.onmousemove = mousemoveTemp;
         mousemoveTemp = null;
       }
-      x = t.style.top;
-      y = t.style.left;
+      x = t.offsetTop;
+      y = t.offsetLeft;
       xvel = 1;
       yvel = 1;
-      id = setInterval(function() { frame(x,y,xvel,yvel) },10);
+      id = setInterval(function() { frame() },10);
       return false;
     }
 
@@ -118,7 +118,6 @@ function dragable (clickEl,dragEl) {
     p.onmouseout = stop_drag;
   }
 }
-
 
 
 </script>
