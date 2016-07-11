@@ -11,6 +11,7 @@
 
 
   <script>
+  
   window.onload=function(){dragable('testdiv','testdiv');};
 
   function get (el) {
@@ -86,6 +87,9 @@ function dragable (clickEl,dragEl) {
         mousemoveTemp = document.body.onmousemove;
       }
       document.body.onmousemove = mouseMoveHandler;
+      //Devnote: This clear interval is not clearing ALL of them.
+      //If there are for example, 3 setIntervals and you clear one, the other
+      //two are still working.
       clearInterval(id);
       return false;
     }
@@ -93,11 +97,13 @@ function dragable (clickEl,dragEl) {
     var frame = function() {
       x = x + xvel;
       y = y + yvel;
-      t.style.top = x + 'px';
-      t.style.left = y + 'px';
+      t.style.left = x + 'px';
+      t.style.top = y + 'px';
+      xvel = xvel*.9;
+      yvel = yvel*.9;
     }
 
-    var stop_drag = function () {
+    var stop_drag = function (e) {
       drag=false;
 
       // restore previous mousemove event handler if necessary:
@@ -105,17 +111,40 @@ function dragable (clickEl,dragEl) {
         document.body.onmousemove = mousemoveTemp;
         mousemoveTemp = null;
       }
-      x = t.offsetTop;
-      y = t.offsetLeft;
-      xvel = 1;
-      yvel = 1;
+      x = t.offsetLeft;
+      y = t.offsetTop;
+      var velocities = calculateVelocity(e);
+      xvel = velocities[0];
+      yvel = velocities[1];
       id = setInterval(function() { frame() },10);
       return false;
     }
 
+//grabbed from http://stackoverflow.com/questions/19794323/mouse-speed-javascript-function
+//altered velocity calculation and return
+    function calculateVelocity(e_init) {
+      var x = e_init.clientX;
+      var y = e_init.clientY;
+      var time = Date.now();
+      return function(e) {
+        var new_x = e.clientX;
+        var new_y = e.clienty;
+        var new_time = Date.now();
+        var x_dist = new_x-x;
+        var y_dist = new_y-y;
+        var interval = new_time-time;
+        x = new_x;
+        y = new_y;
+        time = new_time;
+        var xvel = x_dist/interval;
+        var yvel = y_dist/interval;
+        return [xvel,yvel];
+      }
+    }
+
     p.onmousedown = start_drag;
     p.onmouseup = stop_drag;
-    p.onmouseout = stop_drag;
+    //p.onmouseout = stop_drag;
   }
 }
 
