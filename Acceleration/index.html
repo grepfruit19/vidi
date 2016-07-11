@@ -1,19 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html style="margin:0;height:100%">
 
 <head>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
-<body>
+<body style="margin:0;height:100%;" onmousemove="velocityCalc(event)">
   <div id="testdiv" style="background-color:blue; position:absolute; top:300px
   ;left:300px"></div>
 
 
   <script>
-  
+  var x,y,xvel,yvel;
+  function velocityCalc(event){
+    x = event.clientX;
+    y = event.clientY;
+    var time = Date.now();
+    return function(e) {
+      var new_x = e.clientX;
+      var new_y = e.clienty;
+      var new_time = Date.now();
+      var x_dist = new_x-x;
+      var y_dist = new_y-y;
+      var interval = new_time-time;
+      x = new_x;
+      y = new_y;
+      time = new_time;
+      xvel = x_dist/interval;
+      yvel = y_dist/interval;
+  }
   window.onload=function(){dragable('testdiv','testdiv');};
 
+  //Convenience method
   function get (el) {
     if (typeof el == 'string') return document.getElementById(el);
     return el;
@@ -71,10 +89,6 @@ function dragable (clickEl,dragEl) {
       return false;
     }
     var id;
-    var x;
-    var y;
-    var xvel;
-    var yvel;
     var start_drag = function (e) {
       e = e || window.event;
 
@@ -87,13 +101,12 @@ function dragable (clickEl,dragEl) {
         mousemoveTemp = document.body.onmousemove;
       }
       document.body.onmousemove = mouseMoveHandler;
-      //Devnote: This clear interval is not clearing ALL of them.
-      //If there are for example, 3 setIntervals and you clear one, the other
-      //two are still working.
+
       clearInterval(id);
       return false;
     }
 
+    //handles deceleration upon stop_drag
     var frame = function() {
       x = x + xvel;
       y = y + yvel;
@@ -121,7 +134,7 @@ function dragable (clickEl,dragEl) {
     }
 
 //grabbed from http://stackoverflow.com/questions/19794323/mouse-speed-javascript-function
-//altered velocity calculation and return
+//altered velocity calculation and returns xvel and yvel in pixels/sec
     function calculateVelocity(e_init) {
       var x = e_init.clientX;
       var y = e_init.clientY;
@@ -147,7 +160,7 @@ function dragable (clickEl,dragEl) {
     //p.onmouseout = stop_drag;
   }
 }
-
+}
 
 </script>
 </body>
