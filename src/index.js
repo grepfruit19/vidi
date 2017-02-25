@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
 
-import AuthService from './util/AuthService';
 import App from './modules/App';
 import Login from './modules/Login';
 import Home from './modules/Home';
@@ -10,6 +9,9 @@ import Signup from './modules/Signup';
 import NewRoutine from './modules/NewRoutine';
 
 import './index.css';
+
+
+
 
 ReactDOM.render(
   <Router history={browserHistory}>

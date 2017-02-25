@@ -22,10 +22,10 @@ class SignupForm extends Component {
         <h2>Health Coach Sign Up</h2>
         <FormGroup controlID="formUsername">
           <Col componentClass={ControlLabel} sm={2}>
-            Username
+            Email Address
           </Col>
           <Col sm={10}>
-            <FormControl type="username" placeholder="Username" />
+            <FormControl type="username" placeholder="Email Address" />
           </Col>
         </FormGroup>
         <FormGroup controlID="formPassword">
@@ -41,7 +41,7 @@ class SignupForm extends Component {
             Re-enter Password
           </Col>
           <Col sm={10}>
-            <FormControl type="passwordValidation" placeholder="Password" />
+            <FormControl type="passwordValidation" placeholder="Verify Password" />
           </Col>
         </FormGroup>
         <Button bsStyle="primary">Sign Up</Button>
