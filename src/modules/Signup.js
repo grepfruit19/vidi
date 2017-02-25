@@ -20,7 +20,7 @@ class SignupForm extends Component {
     return (
       <form className="login">
         <h2>Health Coach Sign Up</h2>
-        <FormGroup controlID="formUsername">
+        <FormGroup controlId="formUsername">
           <Col componentClass={ControlLabel} sm={2}>
             Email Address
           </Col>
@@ -28,7 +28,7 @@ class SignupForm extends Component {
             <FormControl type="username" placeholder="Email Address" />
           </Col>
         </FormGroup>
-        <FormGroup controlID="formPassword">
+        <FormGroup controlId="formPassword">
           <Col componentClass={ControlLabel} sm={2}>
             Password
           </Col>
@@ -36,7 +36,7 @@ class SignupForm extends Component {
             <FormControl type="password" placeholder="Password" />
           </Col>
         </FormGroup>
-        <FormGroup controlID="formPassValidation">
+        <FormGroup controlId="formPassValidation">
           <Col componentClass={ControlLabel} sm={2}>
             Re-enter Password
           </Col>

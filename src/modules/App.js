@@ -8,9 +8,16 @@ class App extends Component {
   }
 
   render() {
+    let children = null;
+    if (this.props.children) {
+      console.log(this.props.children);
+      children = React.cloneElement(this.props.children, {
+        auth: this.props.route.auth //sends auth instance from route to children
+      })
+    }
     return (
       <div className="App">
-        {this.props.children}
+        {children}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css"></link>
       </div>

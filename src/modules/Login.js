@@ -3,11 +3,17 @@ import { Link } from 'react-router';
 import {
   FormGroup, Col, FormControl, ControlLabel, Button
 } from 'react-bootstrap';
+import AuthService from '../util/AuthService';
 
 
 class Login extends Component {
-
+  static propTypes = {
+    location: T.object,
+    auth: T.instanceOf(AuthService)
+  }
   render() {
+    const { auth } = this.props;
+    console.log(auth);
     return(
       <form className="login">
         <h2>Health Coach Login</h2>
@@ -30,7 +36,7 @@ class Login extends Component {
         <Link to={'/signup'}>
           <Button bsStyle="default">Sign up</Button>
         </Link>
-        <Button bsStyle="primary">Log In</Button>
+        <Button bsStyle="primary" onClick={auth.login.bind(this)}>Log In</Button>
       </form>
     )
   }
