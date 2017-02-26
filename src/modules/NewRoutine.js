@@ -9,35 +9,15 @@ class NewRoutineContainer extends Component {
     this.state = {
       left: 2,
       right: 10,
-    }
-  }
-
-  render(){
-    return(
-      <NewRoutine />
-    )
-  }
-}
-
-//This class handles creation of new routines.
-class NewRoutine extends Component {
-  constructor(props){
-    super(props);
-    //All form data is kept in state, as per React best practices.
-    this.state = {
-      left: 2,
-      right: 10,
       cards: [],
-      title: '',
-      timePeriod: '',
-      description: ''
-    };
-    //Ensures that state updates occur properly.
-    this.addCard = this.addCard.bind(this);
+      routineTitle: '',
+      routineTimePeriod: '',
+      routineDescription: '',
+    }
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-//Ensures all form data is stored in state.
+  //Ensures all form data is stored in state.
   handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -48,6 +28,26 @@ class NewRoutine extends Component {
     });
   }
 
+  render(){
+    return(
+      <NewRoutine
+        left={this.state.left}
+        right={this.state.right}
+        title={this.state.routineTitle}
+        timePeriod={this.state.routineTimePeriod}
+        description={this.state.routineDescription}
+        onChange={this.handleInputChange}/>
+    )
+  }
+}
+
+//This class handles creation of new routines.
+class NewRoutine extends Component {
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
   addCard(){
     let temp = this.state.cards.slice();
     let arraySize = temp.length;
@@ -55,50 +55,55 @@ class NewRoutine extends Component {
     this.setState({cards: temp});
   }
 
+  handleChange(event){
+    this.props.onChange(event);
+  }
+
   render() {
     return(
       <form className="login">
         <h2>Create New Routine</h2>
         <FormGroup controlId="routineTitle">
-          <Col componentClass={ControlLabel} sm={this.state.left}>
+          <Col componentClass={ControlLabel} sm={this.props.left}>
             Title
           </Col>
           <Col sm={10}>
             <FormControl
-              name="title"
+              name="routineTitle"
               type="text"
-              value={this.state.title}
-              onChange={this.handleInputChange}
+              value={this.props.title}
+              onChange={this.handleChange}
               placeholder="Routine Title" />
           </Col>
         </FormGroup>
         <FormGroup controlId="routineTimePeriod">
-          <Col componentClass={ControlLabel} sm={this.state.left}>
+          <Col componentClass={ControlLabel} sm={this.props.left}>
             Time Period
           </Col>
           <Col sm={10}>
             <FormControl
-              name="timePeriod"
+              name="routineTimePeriod"
               type="number"
-              value={this.state.timePeriod}
-              onChange={this.handleInputChange}
+              value={this.props.timePeriod}
+              onChange={this.handleChange}
               placeholder="Duration (In Weeks)" />
           </Col>
         </FormGroup>
         <FormGroup controlId="routineDescription">
-          <Col componentClass={ControlLabel} sm={this.state.left}>
+          <Col componentClass={ControlLabel} sm={this.props.left}>
             Description
           </Col>
           <Col sm={10}>
             <FormControl
               maxLength={1000}
+              name="routineDescription"
               type="text"
-              value={this.state.description}
-              onChange={this.handleInputChange}
+              value={this.props.description}
+              onChange={this.handleChange}
               placeholder="Description (Max 160 chars)" />
           </Col>
         </FormGroup>
-        {this.state.cards}
+        {this.props.cards}
         <Button onClick={this.addCard} bsStyle="primary">Add Card</Button><br/>
         <Button bsStyle="primary">Submit</Button>
       </form>
