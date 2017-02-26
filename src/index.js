@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link, browserHistory } from 'react-router';
+import { Router, Route, browserHistory } from 'react-router';
 
 import App from './modules/App';
 import LoginContainer from './modules/Login';
@@ -11,11 +11,12 @@ import AuthService from './util/AuthService'
 
 const auth = new AuthService('MvtKfaE0MMwTE6Sw7jXxJVudpvDhbzcY', 'wtk219.auth0.com');
 
+/*
 const requireAuth = (nextState, replace) => {
   if (!auth.loggedIn()) {
     replace({ pathname: '/login' })
   }
-}
+}*/
 
 import './index.css';
 

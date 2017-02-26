@@ -13,7 +13,6 @@ class Login extends Component {
   }
   render() {
     const { auth } = this.props;
-    console.log(auth);
     return(
       <form className="login">
         <h2>Health Coach Login</h2>
