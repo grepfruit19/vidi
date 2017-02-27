@@ -20,13 +20,13 @@ class NewRoutineContainer extends Component {
 
   //Ensures all form data is stored in state.
   handleInputChange(event, index) {
-    console.log(event, index);
+    console.log(this.state);
+    console.log(index);
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-    //TODO: Figure out how to sort out state.name vs state.target.name
     if (index!==undefined){
-      let temp = this.state.name.slice();
+      let temp = this.state.cards.slice();
       temp[index] = value;
       this.setState({[name]: temp});
     } else {
