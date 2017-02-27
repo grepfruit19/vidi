@@ -20,15 +20,14 @@ class NewRoutineContainer extends Component {
 
   //Ensures all form data is stored in state.
   handleInputChange(event, index) {
-    console.log(this.state);
-    console.log(index);
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-    if (index!==undefined){
-      let temp = this.state.cards.slice();
-      temp[index] = value;
-      this.setState({[name]: temp});
+    if (index!==undefined){ //This is for NewCards.
+      let cardsCopy = this.state.cards.slice();
+      let currentCard = cardsCopy[index];
+      currentCard[name] = value;
+      this.setState({cards: cardsCopy});
     } else {
       this.setState({
         [name]: value

@@ -16,6 +16,23 @@ class Signup extends Component {
 }
 
 class SignupForm extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      email: '',
+      password: '',
+      passwordValidation: '',
+    }
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+  handleInputChange(event, index) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    });
+  }
   render() {
     return (
       <form className="login">
@@ -25,7 +42,12 @@ class SignupForm extends Component {
             Email Address
           </Col>
           <Col sm={10}>
-            <FormControl type="username" placeholder="Email Address" />
+            <FormControl
+              name="email"
+              value={this.state.email}
+              type="email"
+              placeholder="Email Address (E.g. coach@health.com)"
+              onChange={this.handleInputChange} />
           </Col>
         </FormGroup>
         <FormGroup controlId="formPassword">
@@ -33,7 +55,12 @@ class SignupForm extends Component {
             Password
           </Col>
           <Col sm={10}>
-            <FormControl type="password" placeholder="Password" />
+            <FormControl
+              name="password"
+              value={this.state.password}
+              type="password"
+              placeholder="Password"
+              onChange={this.handleInputChange} />
           </Col>
         </FormGroup>
         <FormGroup controlId="formPassValidation">
@@ -41,7 +68,12 @@ class SignupForm extends Component {
             Re-enter Password
           </Col>
           <Col sm={10}>
-            <FormControl type="passwordValidation" placeholder="Verify Password" />
+            <FormControl
+              name="passwordValidation"
+              value={this.state.passwordValidation}
+              type="password"
+              placeholder="Verify Password"
+              onChange={this.handleInputChange} />
           </Col>
         </FormGroup>
         <Button bsStyle="primary">Sign Up</Button>
