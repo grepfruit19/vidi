@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   FormGroup, Col, FormControl, ControlLabel, Button
 } from 'react-bootstrap';
-<<<<<<< HEAD
 import Parse from 'parse';
 
 /*
@@ -10,8 +9,6 @@ To change the form, you must change the rendered form,
 the addCard method, the save method (createRoutine),
 
 */
-=======
->>>>>>> 67a9a334e827a1c431e4fdb4d657f3b7b20b72b9
 
 class NewRoutineContainer extends Component {
   constructor(props){
@@ -26,10 +23,7 @@ class NewRoutineContainer extends Component {
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.addCard = this.addCard.bind(this);
-<<<<<<< HEAD
     this.createRoutine = this.createRoutine.bind(this);
-=======
->>>>>>> 67a9a334e827a1c431e4fdb4d657f3b7b20b72b9
   }
 
   //Ensures all form data is stored in state.
@@ -61,7 +55,6 @@ class NewRoutineContainer extends Component {
       order: '',
       otherUrl: '',
       videoUrl: '',
-
       key: index,
       index: index
     });
@@ -74,26 +67,33 @@ class NewRoutineContainer extends Component {
     routine.set("Title", this.state.routineTitle);
     routine.set("description", this.state.routineDescription);
     routine.set("timePeriod", this.state.routineTimePeriod);
+    //cardsPassArray is so inner functions can access the array.
+    let cardsPassArray = this.state.cards.slice();
     routine.save(null, {
       success: function(routine){
         const CardsCreated = Parse.Object.extend("CardsCreated");
         let cardsSaveArray = [];
-        this.state.cards.forEach(function(current){
+        cardsPassArray.forEach(function(current){
           let daysArray = current.days.split(",");
+          daysArray = daysArray.map(function(current){
+            return parseInt(current, 10);
+          });
           let cardsCreated = new CardsCreated();
           cardsCreated.set("routineName", routine.Title);
           cardsCreated.set("routineID", routine.id);
           cardsCreated.set("Title", current.title);
           cardsCreated.set("Description", current.description);
           cardsCreated.set("shortDescription", current.shortDescription);
-          cardsCreated.set("duration", current.duration);
+          cardsCreated.set("duration", parseInt(current.duration,10));
           cardsCreated.set("days", daysArray);
-          cardsCreated.set("order", current.order);
+          cardsCreated.set("order", parseInt(current.order,10));
           cardsCreated.set("videourl", current.videoUrl);
           cardsCreated.set('urlstring', current.otherUrl);
           cardsSaveArray.push(cardsCreated);
         });
-        CardsCreated.saveAll(cardsSaveArray, {
+        console.log("finished foreach");
+        console.log(cardsSaveArray);
+        Parse.Object.saveAll(cardsSaveArray, {
           success: function(cardsSaveArray){
             console.log("in saveAll");
             alert("Saved finished");
@@ -123,7 +123,6 @@ class NewRoutineContainer extends Component {
       duration={card.duration}
       days={card.days}
       order={card.order}
-
       onChange={this.handleInputChange}
       />
     )
@@ -138,7 +137,6 @@ class NewRoutineContainer extends Component {
           onChange={this.handleInputChange}/>
           <br/>
           <br/>
-
           {cardList}
           <Button onClick={this.addCard} bsStyle="primary">Add Card</Button><br/>
           <Button onClick={this.createRoutine} bsStyle="primary">Submit</Button>

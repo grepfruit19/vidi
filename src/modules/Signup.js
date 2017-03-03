@@ -13,6 +13,7 @@ class SignupForm extends Component {
       email: '',
       password: '',
       passwordValidation: '',
+      passwordIsSame: 'success'
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.signup = this.signup.bind(this);
@@ -38,8 +39,12 @@ class SignupForm extends Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-    this.setState({
-      [name]: value
+    this.setState({[name]: value},function(){
+      if (this.state.password===this.state.passwordValidation){
+        this.setState({passwordIsSame: "success"})
+      } else {
+        this.setState({passwordIsSame: "error"});
+      }
     });
   }
   render() {
@@ -72,7 +77,7 @@ class SignupForm extends Component {
               onChange={this.handleInputChange} />
           </Col>
         </FormGroup>
-        <FormGroup controlId="formPassValidation">
+        <FormGroup controlId="formPassValidation" validationState={this.state.passwordIsSame}>
           <Col componentClass={ControlLabel} sm={2}>
             Re-enter Password
           </Col>
@@ -85,7 +90,6 @@ class SignupForm extends Component {
               onChange={this.handleInputChange} />
           </Col>
         </FormGroup>
-
         <Button onClick={this.signup} bsStyle="primary">Sign Up</Button>
       </form>
     )
