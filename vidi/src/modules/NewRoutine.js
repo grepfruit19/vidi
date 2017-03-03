@@ -2,16 +2,7 @@ import React, { Component } from 'react';
 import {
   FormGroup, Col, FormControl, ControlLabel, Button
 } from 'react-bootstrap';
-<<<<<<< HEAD
 import Parse from 'parse';
-
-/*
-To change the form, you must change the rendered form,
-the addCard method, the save method (createRoutine),
-
-*/
-=======
->>>>>>> 67a9a334e827a1c431e4fdb4d657f3b7b20b72b9
 
 class NewRoutineContainer extends Component {
   constructor(props){
@@ -26,10 +17,7 @@ class NewRoutineContainer extends Component {
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.addCard = this.addCard.bind(this);
-<<<<<<< HEAD
     this.createRoutine = this.createRoutine.bind(this);
-=======
->>>>>>> 67a9a334e827a1c431e4fdb4d657f3b7b20b72b9
   }
 
   //Ensures all form data is stored in state.
@@ -58,10 +46,6 @@ class NewRoutineContainer extends Component {
       shortDescription: '',
       duration: '',
       days: '',
-      order: '',
-      otherUrl: '',
-      videoUrl: '',
-
       key: index,
       index: index
     });
@@ -71,41 +55,13 @@ class NewRoutineContainer extends Component {
   createRoutine(){
     const Routines = Parse.Object.extend("Routines");
     let routine = new Routines();
-    routine.set("Title", this.state.routineTitle);
-    routine.set("description", this.state.routineDescription);
-    routine.set("timePeriod", this.state.routineTimePeriod);
+    routine.set("title", this.state.routineTitle);
     routine.save(null, {
       success: function(routine){
-        const CardsCreated = Parse.Object.extend("CardsCreated");
-        let cardsSaveArray = [];
-        this.state.cards.forEach(function(current){
-          let daysArray = current.days.split(",");
-          let cardsCreated = new CardsCreated();
-          cardsCreated.set("routineName", routine.Title);
-          cardsCreated.set("routineID", routine.id);
-          cardsCreated.set("Title", current.title);
-          cardsCreated.set("Description", current.description);
-          cardsCreated.set("shortDescription", current.shortDescription);
-          cardsCreated.set("duration", current.duration);
-          cardsCreated.set("days", daysArray);
-          cardsCreated.set("order", current.order);
-          cardsCreated.set("videourl", current.videoUrl);
-          cardsCreated.set('urlstring', current.otherUrl);
-          cardsSaveArray.push(cardsCreated);
-        });
-        CardsCreated.saveAll(cardsSaveArray, {
-          success: function(cardsSaveArray){
-            console.log("in saveAll");
-            alert("Saved finished");
-          },
-          error: function(error){
-            console.log("in error save all");
-            alert("Error: " + error.message);
-          }
-        });
+        alert("Okay!");
       },
       error: function(routine, error){
-        alert("Error: " + error.message);
+        alert("Not okay");
       }
     });
   }
@@ -122,8 +78,6 @@ class NewRoutineContainer extends Component {
       shortDescription={card.shortDescription}
       duration={card.duration}
       days={card.days}
-      order={card.order}
-
       onChange={this.handleInputChange}
       />
     )
@@ -142,7 +96,6 @@ class NewRoutineContainer extends Component {
           {cardList}
           <Button onClick={this.addCard} bsStyle="primary">Add Card</Button><br/>
           <Button onClick={this.createRoutine} bsStyle="primary">Submit</Button>
-
       </div>
     )
   }
@@ -260,8 +213,6 @@ class NewCard extends Component {
             <FormControl
               maxLength={160}
               type="text"
-              name="shortDescription"
-
               value={this.props.shortDescription}
               onChange={this.handleChange}
               placeholder="An abbreviated description (Max 160 chars)" />
@@ -274,7 +225,6 @@ class NewCard extends Component {
           <Col sm={10}>
             <FormControl
               type="text"
-              name="days"
               value={this.props.days}
               onChange={this.handleChange}
               placeholder="Input as list of numbers separated by commas (no spaces)" />
@@ -287,7 +237,6 @@ class NewCard extends Component {
           <Col sm={10}>
             <FormControl
               type="number"
-              name="duration"
               value={this.props.duration}
               onChange={this.handleChange}
               placeholder="Duration (In number of minutes)"/>
@@ -300,23 +249,9 @@ class NewCard extends Component {
           <Col sm={10}>
             <FormControl
               type="text"
-              name="videoUrl"
               value={this.props.videoUrl}
               onChange={this.handleChange}
               placeholder="Video URL"/>
-          </Col>
-        </FormGroup>
-        <FormGroup controlId="cardOtherUrl">
-          <Col componentClass={ControlLabel} sm={this.props.left}>
-            Other URL
-          </Col>
-          <Col sm={10}>
-            <FormControl
-              type="text"
-              name="otherUrl"
-              value={this.props.otherUrl}
-              onChange={this.handleChange}
-              placeholder="URLs to articles, recipes, etc"/>
           </Col>
         </FormGroup>
         <FormGroup controlId="cardOrder">
@@ -326,7 +261,6 @@ class NewCard extends Component {
           <Col sm={10}>
             <FormControl
               type="number"
-              name="order"
               value={this.props.order}
               onChange={this.handleChange}
               placeholder="Order for any particular day" />

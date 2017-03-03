@@ -2,9 +2,18 @@ import React, { Component } from 'react';
 import {
   FormGroup, Col, FormControl, ControlLabel, Button
 } from 'react-bootstrap';
-import Parse from 'parse';
 
 //import './App.css';
+
+class Signup extends Component {
+  render() {
+    return (
+      <div>
+        <SignupForm/>
+      </div>
+    );
+  }
+}
 
 class SignupForm extends Component {
   constructor(props){
@@ -15,24 +24,6 @@ class SignupForm extends Component {
       passwordValidation: '',
     }
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.signup = this.signup.bind(this);
-  }
-  signup(){
-    if (this.state.password!==this.state.passwordValidation){
-      alert("Password and Validation do not match");
-    } else {
-      let user = new Parse.User();
-      user.set("username", this.state.email);
-      user.set("password", this.state.password);
-      user.signUp(null, {
-        success: function(user){
-          this.props.router.push('/home');
-        },
-        error: function(user, error){
-          alert("Error: " + error.code + " " + error.message);
-        }
-      });
-    }
   }
   handleInputChange(event, index) {
     const target = event.target;
@@ -85,11 +76,10 @@ class SignupForm extends Component {
               onChange={this.handleInputChange} />
           </Col>
         </FormGroup>
-
-        <Button onClick={this.signup} bsStyle="primary">Sign Up</Button>
+        <Button bsStyle="primary">Sign Up</Button>
       </form>
     )
   }
 }
 
-export default SignupForm;
+export default Signup;

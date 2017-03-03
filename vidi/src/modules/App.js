@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../App.css';
-<<<<<<< HEAD
 import Parse from 'parse';
 
 class App extends Component {
@@ -10,13 +9,6 @@ class App extends Component {
     document.title = "Vidi Health Coaching";
     Parse.initialize('appid');
     Parse.serverURL = 'https://sentience.herokuapp.com/parse';
-=======
-
-class App extends Component {
-  constructor(props){
-    super(props);
-    document.title = "Vidi Health Coaching";
->>>>>>> 67a9a334e827a1c431e4fdb4d657f3b7b20b72b9
   }
 
   render() {

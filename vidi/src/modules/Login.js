@@ -3,8 +3,6 @@ import { Link } from 'react-router';
 import {
   FormGroup, Col, FormControl, ControlLabel, Button
 } from 'react-bootstrap';
-
-import Parse from 'parse';
 //import AuthService from '../util/AuthService';
 
 
@@ -18,18 +16,6 @@ class Login extends Component {
       password: '',
     }
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-  }
-
-  handleLogin(){
-    Parse.User.logIn(this.state.user, this.state.password, {
-      success: function(user){
-        alert("Success! Please navigate to home");
-      },
-      error: function(user, error){
-        alert("Error: " + error.code + " " + error.message);
-      }
-    });
   }
 
   handleInputChange(event) {
@@ -40,7 +26,6 @@ class Login extends Component {
       [name]: value
     });
   }
-
 
   // static propTypes = {
   //   location: T.object,
@@ -78,7 +63,7 @@ class Login extends Component {
           </Col>
         </FormGroup>
         <Link to={'/signup'}>
-          <Button onClick={this.handleLogin} bsStyle="default">Sign up</Button>
+          <Button bsStyle="default">Sign up</Button>
         </Link>
       </form>
     )
