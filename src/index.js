@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App from './modules/App';
 import LoginContainer from './modules/Login';
@@ -13,6 +13,7 @@ import './index.css';
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App} >
+    <IndexRoute component={Home}/>
       <Route path="/login" component={LoginContainer}/>
       <Route path="/home" component={Home}/>
       <Route path="/signup" router={Router} component={Signup}/>

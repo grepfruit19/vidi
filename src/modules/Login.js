@@ -8,7 +8,6 @@ import Parse from 'parse';
 class Login extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = {
       left: 2,
       right: 10,

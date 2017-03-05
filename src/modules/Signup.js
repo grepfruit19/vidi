@@ -19,6 +19,7 @@ class SignupForm extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.signup = this.signup.bind(this);
   }
+
   signup(){
     if (this.state.password!==this.state.passwordValidation){
       alert("Password and Validation do not match");
@@ -38,6 +39,8 @@ class SignupForm extends Component {
       });
     }
   }
+
+  //This method changes the state when the form data changes. 
   handleInputChange(event, index) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import '../App.css';
+import { Link } from 'react-router';
 import {
-  Button
+  Button, Nav, NavItem
 } from 'react-bootstrap';
 import Parse from 'parse';
 
@@ -38,10 +39,25 @@ class App extends Component {
       })
     }
     let currentUsername = this.state.currentUser ? this.state.currentUser.getUsername() : 'Not logged in';
+    let nav;
+    if (this.state.currentUser){
+      nav = (
+        <Nav bsStyle="pills">
+          <NavItem>{currentUsername}</NavItem>
+          <NavItem onClick={this.handleLogout}>Log Out</NavItem>
+        </Nav>
+      )
+    } else {
+        nav = (
+          <Nav bsStyle="pills">
+            <NavItem><Link to="/login">{currentUsername}</Link></NavItem>
+          </Nav>
+        )
+    }
     return (
       <div className="App">
-        {currentUsername}
-        <Button onClick={this.handleLogout} bsStyle="primary">Log Out</Button>
+        {nav}
+
         {children}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css"></link>

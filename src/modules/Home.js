@@ -4,6 +4,7 @@ import {
 } from 'react-bootstrap';
 
 class Home extends Component {
+  
   render() {
     return (
       <div className="Home">

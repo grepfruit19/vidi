@@ -4,12 +4,6 @@ import {
 } from 'react-bootstrap';
 import Parse from 'parse';
 
-/*
-To change the form, you must change the rendered form,
-the addCard method, the save method (createRoutine),
-
-*/
-
 class NewRoutineContainer extends Component {
   constructor(props){
     super(props);
@@ -43,6 +37,9 @@ class NewRoutineContainer extends Component {
     }
   }
 
+/*
+Adds a card associated with the routine. Info is kept in state
+*/
   addCard(){
     let temp = this.state.cards.slice();
     let index = temp.length;
@@ -61,6 +58,9 @@ class NewRoutineContainer extends Component {
     this.setState({cards: temp});
   }
 
+/*
+Creates the routine and all associated cards.
+*/
   createRoutine(){
     const Routines = Parse.Object.extend("Routines");
     let routine = new Routines();
@@ -95,13 +95,13 @@ class NewRoutineContainer extends Component {
           cardsCreated.set("order", parseInt(current.order,10));
           cardsCreated.set("videourl", current.videoUrl);
           cardsCreated.set('urlstring', current.otherUrl);
-          //THE FOLLOWING ARE DEFAULT VALUES NOT IN THE FORM
 
           cardsSaveArray.push(cardsCreated);
         });
         Parse.Object.saveAll(cardsSaveArray, {
           success: function(cardsSaveArray){
             alert("Saved finished");
+            window.location = "/home";
           },
           error: function(error){
             alert("Error: " + error.message);
@@ -211,7 +211,7 @@ class NewRoutine extends Component {
   }
 }
 
-//This class handles all cards associated with a routine.
+//This class handles a single card associated with a routine.
 class NewCard extends Component {
   constructor(props){
     super(props);
