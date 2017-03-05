@@ -13,6 +13,7 @@ class SignupForm extends Component {
       email: '',
       password: '',
       passwordValidation: '',
+      authorName: '',
       passwordIsSame: 'success'
     }
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -24,10 +25,12 @@ class SignupForm extends Component {
     } else {
       let user = new Parse.User();
       user.set("username", this.state.email);
+      user.set("email", this.state.email);
       user.set("password", this.state.password);
+      user.set("authorName", this.state.authorName);
       user.signUp(null, {
         success: function(user){
-          this.props.router.push('/home');
+          window.location = "/home";
         },
         error: function(user, error){
           alert("Error: " + error.code + " " + error.message);
@@ -61,6 +64,19 @@ class SignupForm extends Component {
               value={this.state.email}
               type="email"
               placeholder="Email Address (E.g. coach@health.com)"
+              onChange={this.handleInputChange} />
+          </Col>
+        </FormGroup>
+        <FormGroup controlId="formAuthorName">
+          <Col componentClass={ControlLabel} sm={2}>
+            Name
+          </Col>
+          <Col sm={10}>
+            <FormControl
+              name="authorName"
+              value={this.state.authorName}
+              type="text"
+              placeholder="Your name (this will appear on your routines)"
               onChange={this.handleInputChange} />
           </Col>
         </FormGroup>

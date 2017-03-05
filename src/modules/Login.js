@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import {
   FormGroup, Col, FormControl, ControlLabel, Button
 } from 'react-bootstrap';
-
+import {Link} from 'react-router';
 import Parse from 'parse';
-//import AuthService from '../util/AuthService';
-
 
 class Login extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.state = {
       left: 2,
       right: 10,
@@ -22,13 +20,10 @@ class Login extends Component {
   }
 
   handleLogin(){
-    Parse.User.logIn(this.state.user, this.state.password, {
-      success: function(user){
-        alert("Success! Please navigate to home");
-      },
-      error: function(user, error){
-        alert("Error: " + error.code + " " + error.message);
-      }
+    Parse.User.logIn(this.state.username, this.state.password).then(function(user){
+      window.location = "/home";
+    }, function(error){
+      alert("Error: " + error.message);
     });
   }
 
@@ -41,13 +36,7 @@ class Login extends Component {
     });
   }
 
-
-  // static propTypes = {
-  //   location: T.object,
-  //   auth: T.instanceOf(AuthService)
-  // }
   render() {
-    //const { auth } = this.props;
     return(
       <form className="login">
         <h2>Health Coach Login</h2>
@@ -77,9 +66,8 @@ class Login extends Component {
               placeholder="Password" />
           </Col>
         </FormGroup>
-        <Link to={'/signup'}>
-          <Button onClick={this.handleLogin} bsStyle="default">Sign up</Button>
-        </Link>
+        <Link to="/signup"><Button bsStyle="default">Sign Up</Button></Link>
+        <Button type='button' onClick={this.handleLogin} bsStyle="primary">Login</Button>
       </form>
     )
   }

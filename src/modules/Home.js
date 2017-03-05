@@ -20,7 +20,6 @@ class Routine extends Component{
       <div>
         <Panel className="routine">
           <h4>Routine: {this.props.title}</h4>
-          Edit Routine
         </Panel>
       </div>
     )

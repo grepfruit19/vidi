@@ -67,19 +67,25 @@ class NewRoutineContainer extends Component {
     routine.set("Title", this.state.routineTitle);
     routine.set("description", this.state.routineDescription);
     routine.set("timePeriod", this.state.routineTimePeriod);
-    //cardsPassArray is so inner functions can access the array.
+    routine.set("username", this.props.currentUser.getUsername());
+    //THE FOLLOWING ARE DEFAULT VALUES NOT IN THE FORM
+    routine.set("price", "0.00");
+    routine.set("isPaid", false);
+    routine.set("oneliner", this.props.currentUser.attributes.authorName);
+    //These variables are so that inner functions can access them.
     let cardsPassArray = this.state.cards.slice();
     routine.save(null, {
-      success: function(routine){
+      success: (routine) => {
+        console.log(routine);
         const CardsCreated = Parse.Object.extend("CardsCreated");
         let cardsSaveArray = [];
-        cardsPassArray.forEach(function(current){
+        cardsPassArray.forEach((current) => {
           let daysArray = current.days.split(",");
           daysArray = daysArray.map(function(current){
             return parseInt(current, 10);
           });
           let cardsCreated = new CardsCreated();
-          cardsCreated.set("routineName", routine.Title);
+          cardsCreated.set("routineName", this.state.routineTitle);
           cardsCreated.set("routineID", routine.id);
           cardsCreated.set("Title", current.title);
           cardsCreated.set("Description", current.description);
@@ -89,17 +95,15 @@ class NewRoutineContainer extends Component {
           cardsCreated.set("order", parseInt(current.order,10));
           cardsCreated.set("videourl", current.videoUrl);
           cardsCreated.set('urlstring', current.otherUrl);
+          //THE FOLLOWING ARE DEFAULT VALUES NOT IN THE FORM
+
           cardsSaveArray.push(cardsCreated);
         });
-        console.log("finished foreach");
-        console.log(cardsSaveArray);
         Parse.Object.saveAll(cardsSaveArray, {
           success: function(cardsSaveArray){
-            console.log("in saveAll");
             alert("Saved finished");
           },
           error: function(error){
-            console.log("in error save all");
             alert("Error: " + error.message);
           }
         });
