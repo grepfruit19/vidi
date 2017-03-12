@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import { Link } from 'react-router';
 import {
-  Button, Nav, NavItem
+  Nav, NavItem
 } from 'react-bootstrap';
 import Parse from 'parse';
 
@@ -29,6 +29,7 @@ class App extends Component {
         currentUser: Parse.User.current()
       })
     );
+    this.props.route.history.push("/login");
   }
 
   render() {

@@ -12,11 +12,11 @@ import './index.css';
 
 ReactDOM.render(
   <Router history={browserHistory}>
-    <Route path="/" component={App} >
-    <IndexRoute component={Home}/>
-      <Route path="/login" component={LoginContainer}/>
-      <Route path="/home" component={Home}/>
-      <Route path="/signup" router={Router} component={Signup}/>
+    <Route path="/" history={browserHistory} component={App} >
+    <IndexRoute history={browserHistory} component={Home}/>
+      <Route path="/login" history={browserHistory} component={LoginContainer}/>
+      <Route path="/home" history={browserHistory} component={Home}/>
+      <Route path="/signup" history={browserHistory} component={Signup}/>
       <Route path="/newroutine" component={NewRoutine}/>
     </Route>
   </Router>,
