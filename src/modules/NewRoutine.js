@@ -72,8 +72,8 @@ Saves routine to database.
     routine.set("price", "0.00");
     routine.set("isPaid", false);
     routine.set("oneLiner", this.props.currentUser.attributes.authorName);
-    //These variables are so that inner functions can access them.
     let cardsPassArray = this.state.cards.slice();
+    //Saves routine
     routine.save(null, {
       success: (routine) => {
         console.log(routine);
@@ -98,18 +98,32 @@ Saves routine to database.
 
           cardsSaveArray.push(cardsCreated);
         });
+        //Saves cards associated with this routine
         Parse.Object.saveAll(cardsSaveArray, {
           success: function(cardsSaveArray){
+
+            //This block saves cardsCreated IDs as strings.
             let cardsArrayIDs = [];
             cardsSaveArray.forEach(function(card){
-              console.log(card);
               cardsArrayIDs.push(card.id);
             });
-            console.log(cardsArrayIDs);
-            console.log(routine);
+            //Associate cardsCreated with the routine.
             routine.set("cardsCreated", cardsArrayIDs);
-            alert("Saved finished");
-            window.location = "/home";
+            routine.save();
+
+            let user = Parse.User.current();
+            console.log(user);
+            user.add("routinesOwned", routine);
+            user.save(null, {
+              success: function(user) {
+                alert("Saved finished");
+                window.location = "/home";
+              },
+              error: function(user, error){
+                alert("Error: " + error.message);
+              }
+            });
+
           },
           error: function(error){
             alert("Error: " + error.message);
@@ -120,7 +134,7 @@ Saves routine to database.
         alert("Error: " + error.message);
       }
     });
-    
+
   }
 
   render(){

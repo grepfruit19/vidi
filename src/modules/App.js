@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { Link } from 'react-router';
-import {
-  Nav, NavItem
-} from 'react-bootstrap';
+// import { Link } from 'react-router';
 import Parse from 'parse';
 
 class App extends Component {
@@ -39,29 +36,10 @@ class App extends Component {
         currentUser: this.state.currentUser,
       })
     }
-    let currentUsername = this.state.currentUser ? this.state.currentUser.getUsername() : 'Not logged in';
-    let nav;
-    if (this.state.currentUser){
-      nav = (
-        <Nav bsStyle="pills">
-          <NavItem>{currentUsername}</NavItem>
-          <NavItem onClick={this.handleLogout}>Log Out</NavItem>
-        </Nav>
-      )
-    } else {
-        nav = (
-          <Nav bsStyle="pills">
-            <NavItem><Link to="/login">{currentUsername}</Link></NavItem>
-          </Nav>
-        )
-    }
     return (
       <div className="App">
-        <Sidebar user={this.state.currentUser}/>
-        {nav}
-
+        <Sidebar currentUser={this.state.currentUser}/>
         {children}
-
       </div>
     );
   }
@@ -72,29 +50,22 @@ class Sidebar extends Component {
     super(props);
     this.state = {
       currentUsername: this.props.currentUser ? this.props.currentUser.getUsername() : 'Not logged in',
-      nav: null,
-    }
-    if (this.props.currentUser){
-      this.state.nav = (
-        <div>
-          <p>{this.state.currentUsername}</p>
-          <p>Log Out</p>
-        </div>
-      )
-    } else {
-      this.state.nav = (
-        <div>
-          <p>{this.state.currentUsername}</p>
-          <p>Log In</p>
-        </div>
-      )
+      loggedIn: this.props.currentUser ? true : false
     }
   }
   render() {
+    let logged;
+    if (this.state.loggedIn){
+      logged = <p>Log Out</p>
+    } else {
+      logged = <p>Log In</p>
+    }
     return (
       <div className="sidebar">
-        <p>{this.state.nav}</p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <p>{this.state.currentUsername}</p>
+        {logged}
+        <p>Your Routines</p>
+        <p> + New Routine</p>
       </div>
     )
   }
