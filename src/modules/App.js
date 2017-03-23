@@ -57,13 +57,46 @@ class App extends Component {
     }
     return (
       <div className="App">
+        <Sidebar user={this.state.currentUser}/>
         {nav}
 
         {children}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css"></link>
+
       </div>
     );
+  }
+}
+
+class Sidebar extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      currentUsername: this.props.currentUser ? this.props.currentUser.getUsername() : 'Not logged in',
+      nav: null,
+    }
+    if (this.props.currentUser){
+      this.state.nav = (
+        <div>
+          <p>{this.state.currentUsername}</p>
+          <p>Log Out</p>
+        </div>
+      )
+    } else {
+      this.state.nav = (
+        <div>
+          <p>{this.state.currentUsername}</p>
+          <p>Log In</p>
+        </div>
+      )
+    }
+  }
+  render() {
+    return (
+      <div className="sidebar">
+        <p>{this.state.nav}</p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
+    )
   }
 }
 

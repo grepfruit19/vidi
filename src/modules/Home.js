@@ -4,6 +4,8 @@ import {
 } from 'react-bootstrap';
 import { Link } from 'react-router';
 
+import '../index.css';
+
 class Home extends Component {
   constructor(props){
     super(props);
@@ -15,7 +17,11 @@ class Home extends Component {
     return (
       <div className="Home">
         <h2>Your Managed Routines</h2>
-        <Routine title="Sample"/>
+        <Routine
+          title="Test Routine"
+          oneLiner="Will Kim"
+          description="This is a test routine"
+          />
       </div>
     );
   }

@@ -59,19 +59,19 @@ Adds a card associated with the routine. Info is kept in state
   }
 
 /*
-Creates the routine and all associated cards.
+Saves routine to database.
 */
   createRoutine(){
     const Routines = Parse.Object.extend("Routines");
     let routine = new Routines();
-    routine.set("Title", this.state.routineTitle);
+    routine.set("title", this.state.routineTitle);
     routine.set("description", this.state.routineDescription);
     routine.set("timePeriod", this.state.routineTimePeriod);
     routine.set("username", this.props.currentUser.getUsername());
     //THE FOLLOWING ARE DEFAULT VALUES NOT IN THE FORM
     routine.set("price", "0.00");
     routine.set("isPaid", false);
-    routine.set("oneliner", this.props.currentUser.attributes.authorName);
+    routine.set("oneLiner", this.props.currentUser.attributes.authorName);
     //These variables are so that inner functions can access them.
     let cardsPassArray = this.state.cards.slice();
     routine.save(null, {
@@ -87,19 +87,27 @@ Creates the routine and all associated cards.
           let cardsCreated = new CardsCreated();
           cardsCreated.set("routineName", this.state.routineTitle);
           cardsCreated.set("routineID", routine.id);
-          cardsCreated.set("Title", current.title);
-          cardsCreated.set("Description", current.description);
+          cardsCreated.set("title", current.title);
+          cardsCreated.set("description", current.description);
           cardsCreated.set("shortDescription", current.shortDescription);
           cardsCreated.set("duration", parseInt(current.duration,10));
           cardsCreated.set("days", daysArray);
           cardsCreated.set("order", parseInt(current.order,10));
-          cardsCreated.set("videourl", current.videoUrl);
-          cardsCreated.set('urlstring', current.otherUrl);
+          cardsCreated.set("videoUrl", current.videoUrl);
+          cardsCreated.set('urlString', current.otherUrl);
 
           cardsSaveArray.push(cardsCreated);
         });
         Parse.Object.saveAll(cardsSaveArray, {
           success: function(cardsSaveArray){
+            let cardsArrayIDs = [];
+            cardsSaveArray.forEach(function(card){
+              console.log(card);
+              cardsArrayIDs.push(card.id);
+            });
+            console.log(cardsArrayIDs);
+            console.log(routine);
+            routine.set("cardsCreated", cardsArrayIDs);
             alert("Saved finished");
             window.location = "/home";
           },
@@ -112,6 +120,7 @@ Creates the routine and all associated cards.
         alert("Error: " + error.message);
       }
     });
+    
   }
 
   render(){
@@ -150,7 +159,7 @@ Creates the routine and all associated cards.
   }
 }
 
-//This class handles creation of new routines.
+//This is the form for inputs for new routine.
 class NewRoutine extends Component {
   constructor(props){
     super(props);
