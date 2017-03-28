@@ -7,6 +7,7 @@ import LoginContainer from './modules/Login';
 import Home from './modules/Home';
 import Signup from './modules/Signup';
 import NewRoutine from './modules/NewRoutine';
+import RoutineDetails from './modules/RoutineDetails';
 
 import './index.css';
 
@@ -16,6 +17,7 @@ ReactDOM.render(
     <IndexRoute history={browserHistory} component={Home}/>
       <Route path="/login" history={browserHistory} component={LoginContainer}/>
       <Route path="/home" history={browserHistory} component={Home}/>
+      <Route path="/routine" component={RoutineDetails}/>
       <Route path="/signup" history={browserHistory} component={Signup}/>
       <Route path="/newroutine" component={NewRoutine}/>
     </Route>

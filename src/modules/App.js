@@ -52,11 +52,22 @@ class Sidebar extends Component {
       currentUsername: this.props.currentUser ? this.props.currentUser.getUsername() : 'Not logged in',
       loggedIn: this.props.currentUser ? true : false
     }
+    this.handleLogout = this.handleLogout.bind(this);
   }
+
+  handleLogout(){
+    Parse.User.logOut().then(() =>
+      this.setState({
+        currentUser: Parse.User.current()
+      })
+    );
+    this.props.route.history.push("/login");
+  }
+
   render() {
     let logged;
     if (this.state.loggedIn){
-      logged = <p>Log Out</p>
+      logged = <p onClick={this.handleLogout}>Log Out</p>
     } else {
       logged = <p>Log In</p>
     }

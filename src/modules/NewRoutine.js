@@ -108,7 +108,7 @@ Saves routine to database.
               cardsArrayIDs.push(card.id);
             });
             //Associate cardsCreated with the routine.
-            routine.set("cardsCreated", cardsArrayIDs);
+            routine.set("cardsCreated", cardsSaveArray);
             routine.save();
 
             let user = Parse.User.current();

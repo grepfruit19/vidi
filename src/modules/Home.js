@@ -8,7 +8,7 @@ import '../index.css';
 class Home extends Component {
   constructor(props){
     super(props);
-    if (this.props.currentUser===null){
+    if (Parse.User.current()===null){
       this.props.route.history.push("/login");
     }
   }
@@ -29,13 +29,10 @@ class RoutineContainer extends Component {
     let routineDisplay = [];
     let counter = 0;
     routines.forEach((current) => {
-      console.log(current);
       routineDisplay.push(
         <Routine
           key={counter++}
-          title={current.get("title")}
-          oneLiner={current.get("oneLiner")}
-          description={current.get("description")}/>
+          routineObject={current}/>
       );
     });
     this.state = {
@@ -46,18 +43,31 @@ class RoutineContainer extends Component {
     return (
       <div>
         {this.state.routines}
+        <Link to="/newroutine"><button>New Routine</button></Link>
       </div>
     )
   }
 }
 
 class Routine extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      routine: this.props.routineObject
+    }
+  }
+
+//TODO: Set up the edit page.
   render() {
     return (
       <div>
-        <h4>Routine: {this.props.title}</h4>
-        <p>Author: {this.props.oneLiner}</p>
-        <p>description: {this.props.description}</p>
+        <h4>Routine: {this.state.routine.get("title")}</h4>
+        <p>Author: {this.state.routine.get("oneLiner")}</p>
+        <p>description: {this.state.routine.get("description")}</p>
+        <Link to={{
+          pathname: "/routine",
+          state: {routine: this.state.routine}
+        }}><button>Detailed View</button></Link>
       </div>
     )
   }
