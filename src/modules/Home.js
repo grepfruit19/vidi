@@ -60,12 +60,12 @@ class Routine extends Component{
 //TODO: Set up the edit page.
   render() {
     return (
-      <div>
+      <div className="card">
         <h4>Routine: {this.state.routine.get("title")}</h4>
         <p>Author: {this.state.routine.get("oneLiner")}</p>
         <p>description: {this.state.routine.get("description")}</p>
         <Link to={{
-          pathname: "/routine",
+          pathname: "/routine/" + this.state.routine.id,
           state: {routine: this.state.routine}
         }}><button>Detailed View</button></Link>
       </div>

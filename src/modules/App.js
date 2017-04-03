@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-// import { Link } from 'react-router';
+import { Link } from 'react-router';
 import Parse from 'parse';
 
 class App extends Component {
@@ -38,14 +38,16 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <Sidebar currentUser={this.state.currentUser}/>
-        {children}
+        <Header currentUser={this.state.currentUser}/>
+        <div className="children">
+          {children}
+        </div>
       </div>
     );
   }
 }
 
-class Sidebar extends Component {
+class Header extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -67,16 +69,15 @@ class Sidebar extends Component {
   render() {
     let logged;
     if (this.state.loggedIn){
-      logged = <p onClick={this.handleLogout}>Log Out</p>
+      logged = <div onClick={this.handleLogout}>Log Out</div>
     } else {
-      logged = <p>Log In</p>
+      logged = <div>Log In</div>
     }
     return (
-      <div className="sidebar">
-        <p>{this.state.currentUsername}</p>
+      <div className="header">
+        <Link to="/home"><div><h2>Vidi Health Coaching</h2></div></Link>
+        <div>{this.state.currentUsername}</div>
         {logged}
-        <p>Your Routines</p>
-        <p> + New Routine</p>
       </div>
     )
   }

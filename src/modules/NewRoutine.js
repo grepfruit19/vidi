@@ -4,6 +4,7 @@ import {
 } from 'react-bootstrap';
 import Parse from 'parse';
 
+// Contains the state and the divs for all Routines and Cards
 class NewRoutineContainer extends Component {
   constructor(props){
     super(props);
